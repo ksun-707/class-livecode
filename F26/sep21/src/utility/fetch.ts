@@ -57,7 +57,8 @@ const what: Promise<number> = example()
 // Exercise
 /////////////////
 
-// TASK: make a Zod schema for "array of 3-tuples of [string, string that can be turned into a number, email address]"
+// TASK: make a Zod schema for "array of 3-tuples of 
+// [string, string that can be turned into a number, email address]"
 // A tuple is a fixed-length array. Use z.tuple([...])
 // For "can be turned into", see docs at: https://zod.dev/
 
@@ -78,7 +79,8 @@ type registrarData = z.infer<typeof registrarSchema>
  * @returns a constant dataset
  */
 function mockCSV(): string[][] | undefined {
-  return [["Tim Nelson", "20", "tim_nelson@brown.edu"], ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
+  return [["Tim Nelson", "20", "tim_nelson@brown.edu"], 
+          ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
 }
 
 // [ [ String, String-that's a number, email] ... ] -> we want the parser to stop and tell us if the dataset is not following this format

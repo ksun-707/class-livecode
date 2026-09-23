@@ -61,8 +61,16 @@ const what: Promise<number> = example()
 // A tuple is a fixed-length array. Use z.tuple([...])
 // For "can be turned into", see docs at: https://zod.dev/
 
+const registrarSchema = z.array(
+    z.tuple([z.string(), z.coerce.number(), z.email()]))
 
+    // .coerce -> "can turn the string into a number"
 
+type intermediates = "0320" | "0300" | "0330" | "0220" // ..
+type registrarData = z.infer<typeof registrarSchema>
+
+// Java: List<Integer> <-- angle brackets =  generic type parameter
+// Angle brackets really mean: invoke a type constructor. It's not a function or method - it's an operator on types.
 
 /**
  * A "mock" function that returns a dataset, as if just parsed from CSV. 
@@ -73,11 +81,20 @@ function mockCSV(): string[][] | undefined {
   return [["Tim Nelson", "20", "tim_nelson@brown.edu"], ["Nim Telson", "NOT A NUMBER", "NOT AN EMAIL"]]
 }
 
+// [ [ String, String-that's a number, email] ... ] -> we want the parser to stop and tell us if the dataset is not following this format
+
 async function exercise() {
     // TASK: mouse over; what's the type? Why do you think that is?
     const data = mockCSV()
 
     // TASK: parse mockCSV's response with your schema's safeParse, and examine what it returns.
     // Print out the data.
+    const results = registrarSchema.safeParse(mockCSV())
+    if(results.success) {
+        results.data
+    }
+
+    // safeParse: check if type is a "success" or "failure" without throwing runtime errors if the validation fails.
+    // use zod - put it into the pipeline to catch errors early on, save time, money
 
 }
